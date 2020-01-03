@@ -1,0 +1,31 @@
+.fieldContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    margin: 0 auto;
+    padding: 25px 0;
+}
+
+.fieldContent {
+    flex-basis: 30%;
+    display: flex;
+    justify-content: center;
+}
+
+input, select {
+    font-size: 14px;
+    width: 100%;
+    padding: 10px;
+}
+
+select {
+    font-size: 14px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #fff;
+    border-radius: 0;
+    border-color: #c1bcbc;
+    padding: 8.5px;
+}
