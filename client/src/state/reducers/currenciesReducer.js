@@ -6,7 +6,7 @@ import {
     FETCH_CURRENCIES_REJECTED
 } from '../actions/currenciesActions';
 
-const initialState = {
+export const initialState = {
     data: [],
     error: null,
     fetching: false,

@@ -6,7 +6,7 @@ import {
     UPDATE_VALUE
 } from '../actions/socketActions';
 
-const initialState = {
+export const initialState = {
     socketMessage: {},
     isConnected: false
 };

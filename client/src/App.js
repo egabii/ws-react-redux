@@ -11,9 +11,6 @@ const Main = () => {
       <div className={styles.container}>
         <BtcWebSocketApp />
       </div>
-{/*       <Footer>
-        <p>bitcoin 2019</p>
-      </Footer> */}
     </>
   );
 }

@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import { fetchCurrenciesReducer } from './reducers/currenciesReducer';
 import { socketReducer } from './reducers/socketReducer'
 
-const reducer = combineReducers({
+export const reducer = combineReducers({
     currencies: fetchCurrenciesReducer,
     socket: socketReducer
 })

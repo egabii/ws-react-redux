@@ -1,7 +1,6 @@
   
 import { fetchCurrencies } from '../../providers/btcService';
 
-export const FETCH_CURRENCIES = 'FETCH_CURRENCIES';
 export const FETCH_CURRENCIES_PENDING = 'FETCH_CURRENCIES_PENDING';
 export const FETCH_CURRENCIES_FULFILLED = 'FETCH_CURRENCIES_FULFILLED';
 export const FETCH_CURRENCIES_REJECTED = 'FETCH_CURRENCIES_REJECTED';
@@ -28,12 +27,16 @@ const errorHandlerAction = (error) => {
 export const fetchCurrenciesAction = () => {
     return (dispatch) => {
         dispatch(loadingHandlerAction());
-        return fetchCurrencies()
-        .then(response => {
-            dispatch(successHandlerAction(response.data));
-        })
-        .catch(error => {
-            dispatch(errorHandlerAction(error));
-        });
+        return new Promise((resolve, reject) => {
+            fetchCurrencies()
+                .then(response => {
+                dispatch(successHandlerAction(response.data));
+                resolve();
+             })
+            .catch(() => {
+                dispatch(errorHandlerAction({message: 'Failed to fetch currencies'}));
+                reject()
+            });
+        }) 
     }
 };
