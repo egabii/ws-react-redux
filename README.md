@@ -1,4 +1,4 @@
-# Websocket track bitcoin
+# Watching exchange rate of bitcoin
 This application shows data and allows the user to interact, without refreshing the page, and depending in the backend websocket.
 The application can be split in two part
 Frontend - react-redux SPA, which consume resources from a API, and keep up to date with bitcoin exchange rate
