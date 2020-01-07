@@ -24,12 +24,14 @@ const onEmit = (response) => ({
 export const onChangeInputValueAction = ({inputValue, currency}, callback) => {
     return (dispatch, getState) => {
         if (!getState().isConnected) {
-            dispatch(connectSocket());
+            dispatch(onConnectAction());
         }
+
         onChangeCurrencyValue({inputValue, currency}, (response) => {
             dispatch(onEmit(response));
             callback();
         });
+  
     }
 };
 

@@ -14,9 +14,9 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 
-describe('async actions', () => {
+describe('Async currencies actions', () => {
 
-    it('FETCH_CURRENCIES_FULFILLED when fetching currencies has been done', (done) => {
+    test('FETCH_CURRENCIES_FULFILLED when fetching currencies has been done', (done) => {
         const mock = [{ "currency": "USD", "symbol": "$" }];
         const store = mockStore({
             currencies: {
@@ -43,7 +43,7 @@ describe('async actions', () => {
         });
     });
 
-    it('FETCH_CURRENCIES_REJECT when fetching currencies has been done', (done) => {
+    test('FETCH_CURRENCIES_REJECT when fetching currencies has been done', (done) => {
         const store = mockStore({
             currencies: {
                 data: [],

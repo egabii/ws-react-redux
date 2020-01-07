@@ -6,7 +6,7 @@ import {
 } from '../../../state/actions/currenciesActions';
 
 
-describe('CurrenciesReducers Scope', () => {
+describe('Currencies reducers', () => {
     it('should return the initial state of currencies', () => {
         expect(reducer(undefined, {})).toEqual({
             ...initialState

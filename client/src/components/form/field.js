@@ -8,7 +8,6 @@ export const Field = (props) => {
             props.type === 'select'
             ? (
                 <select
-                    /* id="select-currency" */
                     data-testid="select"
                     onChange={props.onChangeInput} 
                     name={props.name} 
@@ -28,12 +27,11 @@ export const Field = (props) => {
                 </select>
             )
             : (<input
-                /* id={`${input}-${name}`} */
                 type={props.type} 
                 value={props.defaultValue} 
                 onChange={props.onChangeInput} 
                 name={props.name} 
-                data-testid={props.name}
+                data-testid={`input-${props.name}`}
                 />)  
         }
         </div>

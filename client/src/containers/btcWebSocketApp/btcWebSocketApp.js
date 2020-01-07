@@ -19,36 +19,28 @@ export default class BtcWebSocketApp extends Component {
     async componentDidMount() {
         this.props.onConnect();
         try {
-            console.log('hola mundo 1');
-            console.log(this.props);
             await this.props.fetchCurrencies();
             if (this.props.currencies.fetched) {
-                console.log('hola mundo 2');
-
                 this.setState(prevState => {
                     return {
                         ...prevState,
                         selectedCurrency: this.props.currencies.data[0]
                     }
                 }, () => {
-                    console.log('hola mundo 3');
-
                     this.onEmit();
                     this.interval = setInterval(() => this.onEmit(), this.state.delayTime * 1000)
                 });
 
             }
-            console.log('hola mundo 4');
-
         } catch(e) {
-            console.log(e);
+            console.error(e);
         }
     }
 
     displayCurrencyValue = () => {
         let currenyValue = 0;
         currenyValue = Math.round(this.props.socket.socketMessage.message * 100) / 100
-        return <h1>{`${this.state.selectedCurrency.symbol} ${currenyValue}`}</h1>
+        return <h1 data-testid="content">{`${this.state.selectedCurrency.symbol} ${currenyValue}`}</h1>
     }
 
     onEmit = () => {
@@ -63,7 +55,6 @@ export default class BtcWebSocketApp extends Component {
     }
 
     componentWillUnmount() {
-        console.log('unmount')
         this.props.onDisconect();
         clearInterval(this.interval);
     }
@@ -88,7 +79,6 @@ export default class BtcWebSocketApp extends Component {
                 [name]: JSON.parse(value)
             }
         }, () => {
-
             clearInterval(this.interval);
             this.onEmit(); // apply changes then initialize setinterval again
             this.interval = setInterval(() => this.onEmit(), this.state.delayTime * 1000);

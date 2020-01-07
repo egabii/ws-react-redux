@@ -9,6 +9,4 @@ export const reducer = combineReducers({
     socket: socketReducer
 })
 
-export const createAppStore = () => {
-    return createStore(reducer, applyMiddleware(thunk));
-};
+export const createAppStore = (state) => createStore(reducer, state, applyMiddleware(thunk));
