@@ -24,19 +24,19 @@ jest.mock('axios');
 jest.mock('socket.io-client');
 
 const initialState = {
-	currencies: {...initialStateForCurrencies},
-	socket: {...initialStateForSocket}
+    currencies: { ...initialStateForCurrencies },
+    socket: { ...initialStateForSocket }
 };
 
 const mockSocketResponse = {
-	'BRL': {
-		15000: '0.91233',
-		25000: '1.92323'
-	},
-	'USD': {
-		15000: '2.822123',
-		25000: '3.245677'
-	}
+    'BRL': {
+        15000: '0.91233',
+        25000: '1.92323'
+    },
+    'USD': {
+        15000: '2.822123',
+        25000: '3.245677'
+    }
 };
 
 afterEach(cleanup);
@@ -45,78 +45,78 @@ afterEach(cleanup);
 // that deal with connected components.
 // you can provide initialState for the entire store that the ui is rendered with
 function renderWithRedux(
-	component,
-	{ initialState, store = createAppStore(initialState) } = {}
+    component,
+    { initialState, store = createAppStore(initialState) } = {}
 ) {
-	return {
-		...render(<Provider store={store}>{component}</Provider>),
-		// adding `store` to the returned utilities to allow us
-		// to reference it in our tests (just try to avoid using
-		// this to test implementation details).
-		store,
-	}
+    return {
+        ...render(<Provider store={store}>{component}</Provider>),
+        // adding `store` to the returned utilities to allow us
+        // to reference it in our tests (just try to avoid using
+        // this to test implementation details).
+        store,
+    }
 }
 
 beforeEach(() => {
-	axios.get.mockResolvedValue({ data: [{"currency":"USD","symbol":"$"}, {"currency":"BRL","symbol":"R$"}] });
+    axios.get.mockResolvedValue({ data: [{ "currency": "USD", "symbol": "$" }, { "currency": "BRL", "symbol": "R$" }] });
 
-	io.connect.mockReturnValue({
-		emit: (eventName, opts, cb) => {
-			switch(eventName) {
-				case 'fetch_currency': {
-					return cb({
-						status: 'success',
-						data:  {
-							data: mockSocketResponse[opts.currency][opts.value]
-						}
-					});
-				}
+    io.connect.mockReturnValue({
+        emit: (eventName, opts, cb) => {
+            switch (eventName) {
+                case 'fetch_currency': {
+                    return cb({
+                        status: 'success',
+                        data: {
+                            data: mockSocketResponse[opts.currency][opts.value]
+                        }
+                    });
+                }
 
-				case 'disconnect':
-					return { connect: false }
-				default: 
-					return { connect: true }
-			}
-		} 
-	});
+                case 'disconnect':
+                    return { connect: false }
+                default:
+                    return { connect: true }
+            }
+        }
+    });
 });
 
 test('Should be able to run with default values', async () => {
-	const { getByTestId, queryByText } = renderWithRedux(<BtcWebSocketApp />); 
+    const { getByTestId, queryByText } = renderWithRedux(<BtcWebSocketApp />);
 
-	expect(queryByText('...LOADING')).toBeInTheDocument();
+    expect(queryByText('...LOADING')).toBeInTheDocument();
 
-	await wait(() => {
-		expect(getByTestId('select')).toHaveTextContent('USD');
-		expect(getByTestId('input-inputValue').value).toBe('15000');
-		expect(getByTestId('input-delayTime').value).toBe('5');
-		expect(getByTestId('content')).toHaveTextContent(/2.82/i);
-	})
+    await wait(() => {
+        expect(getByTestId('select')).toHaveTextContent('USD');
+        expect(getByTestId('input-inputValue').value).toBe('15000');
+        expect(getByTestId('input-delayTime').value).toBe('5');
+        expect(getByTestId('content')).toHaveTextContent(/2.82/i);
+    })
 });
 
 test('should be able to change currency from select', async () => {
-  const { getByTestId, queryByText } = renderWithRedux(<BtcWebSocketApp />);
+    const { getByTestId, queryByText } = renderWithRedux(<BtcWebSocketApp />);
 
-  expect(queryByText('...LOADING')).toBeInTheDocument();
+    expect(queryByText('...LOADING')).toBeInTheDocument();
 
-  await wait(() => {
-    expect(getByTestId('select')).toHaveTextContent('USD');
-    fireEvent.change(getByTestId('select'), { target: { value: JSON.stringify({"currency":"BRL","symbol":"R$"}) } })
-	expect(getByTestId('select')).toHaveTextContent('BRL');
-	expect(getByTestId('content')).toHaveTextContent(/R\$ 0.9/i);
-  })
+    await wait(() => {
+        expect(getByTestId('select')).toHaveTextContent('USD');
+        fireEvent.change(getByTestId('select'), { target: { value: JSON.stringify({ "currency": "BRL", "symbol": "R$" }) } })
+        expect(getByTestId('select')).toHaveTextContent('BRL');
+        expect(getByTestId('content')).toHaveTextContent(/R\$ 0.9/i);
+    })
 });
 
 test('should be able to change input value', async () => {
 
-  const { getByTestId, queryByText } = renderWithRedux(<BtcWebSocketApp />);
+    const { getByTestId, queryByText } = renderWithRedux(<BtcWebSocketApp />);
 
-  expect(queryByText('...LOADING')).toBeInTheDocument();
+    expect(queryByText('...LOADING')).toBeInTheDocument();
 
-  await wait(() => {
-	expect(getByTestId('input-inputValue').value).toBe('15000');
-	fireEvent.change(getByTestId('input-inputValue'), { target: { value: '25000' } })
-	expect(getByTestId('input-inputValue').value).toBe('25000');
-	expect(getByTestId('content')).toHaveTextContent(/\$ 3.25/i);
-  });
+    await wait(() => {
+        expect(getByTestId('input-inputValue').value).toBe('15000');
+        fireEvent.change(getByTestId('input-inputValue'), { target: { value: '25000' } })
+        expect(getByTestId('input-inputValue').value).toBe('25000');
+        expect(getByTestId('content')).toHaveTextContent(/\$ 3.25/i);
+    });
 });
