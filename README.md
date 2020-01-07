@@ -4,6 +4,8 @@ The application can be split in two part
 Frontend - react-redux SPA, which consume resources from a API, and keep up to date with bitcoin exchange rate
 Backend - express + socket.io API that fetches currencies which you can exchanges with bitcoins from [currencies](https://blockchain.info/ticker) and the rate from here [Exchange rate](https://blockchain.info/tobtc?currency=USD&value=500)
 
+More Info: [Exchange rate api](https://www.blockchain.com/es/api/exchange_rates_api)
+
 # CLIENT SIDE
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -43,6 +45,8 @@ You will also see any lint errors in the console.
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+TODO: Implement test report tool for a better visualization of TEST
 
 # SERVER SIDE
 ### `npm start`
