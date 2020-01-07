@@ -28,7 +28,7 @@ describe('Async currencies actions', () => {
             }
         });
 
-        axios.get.mockResolvedValue({ data: mock });
+        axios.get.mockResolvedValue({data :{ data: mock }});
 
         const expectedActions = [
             { type: FETCH_CURRENCIES_PENDING },

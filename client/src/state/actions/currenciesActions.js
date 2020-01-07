@@ -33,9 +33,9 @@ export const fetchCurrenciesAction = () => {
                 dispatch(successHandlerAction(response.data));
                 resolve();
              })
-            .catch(() => {
+            .catch((e) => {
                 dispatch(errorHandlerAction({message: 'Failed to fetch currencies'}));
-                reject()
+                reject(e)
             });
         });
     }

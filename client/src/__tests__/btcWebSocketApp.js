@@ -58,7 +58,9 @@ function renderWithRedux(
 }
 
 beforeEach(() => {
-    axios.get.mockResolvedValue({ data: [{ "currency": "USD", "symbol": "$" }, { "currency": "BRL", "symbol": "R$" }] });
+    axios.get.mockResolvedValue({
+        data: { data: [{ "currency": "USD", "symbol": "$" }, { "currency": "BRL", "symbol": "R$" }] }
+    });
 
     io.connect.mockReturnValue({
         emit: (eventName, opts, cb) => {
